@@ -1,6 +1,10 @@
 {
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "mongodb": "^7.5.0",
+    "mongoose": "^9.7.4",
+    "mongose": "^0.0.2-security",
     "react-icons": "^5.7.0"
   },
   "name": "mernstate",
