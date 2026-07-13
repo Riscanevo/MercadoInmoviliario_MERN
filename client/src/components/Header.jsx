@@ -1,8 +1,10 @@
 import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 
 export default function Header() {
+  const { currentUser } = useSelector(state => state.user);
+  console.log('currentUser en Header:', currentUser);
   return (
     <header className='bg-slate-200 shadow-md'>
       <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
@@ -10,7 +12,8 @@ export default function Header() {
               <span className='text-slate-500'>Prisma</span>
               <span className='text-slate-700'>Inmobiliario</span>
           </h1>
-          <form className='bg-slate-100 p-3 rounded-lg flex items-center'>
+          <form className='bg-slate-100 p-3 rounded-lg flex items-
+center'>
               <input 
                 type='text' 
                 placeholder='Buscar propiedades...'
@@ -24,16 +27,24 @@ export default function Header() {
                 Inicio
               </li>
             </Link>
-            <Link to='/sign-in'>
-              <li className='hidden sm:inline text-slate-700 hover:underline'>
-              Iniciar sesión
+            <Link to='/profile'>
+            {currentUser ? (
+              <img
+                className='rounded-full h-7 w-7 object-cover'
+                src={currentUser.avatar || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}
+                alt='profile'
+                referrerPolicy='no-referrer'
+              />
+            ) : (
+              <li className=' text-slate-700 hover:underline'>
+                Iniciar sesión
               </li>
-            </Link>
-            <Link to='/about'>
-                <li className=' text-slate-700 hover:underline'> Acerca de</li>
-            </Link>
-          </ul>
+            )}
+            
+          </Link>
+
+        </ul>
       </div>
     </header>
-  )
+  );
 }
