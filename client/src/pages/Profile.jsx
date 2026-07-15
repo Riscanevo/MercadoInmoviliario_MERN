@@ -10,6 +10,9 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   deleteUserFailure,
+  signOutUserStart,
+  signOutUserSuccess,
+  signOutUserFailure,
 } from '../redux/user/userSlice.js'
 
 
@@ -122,6 +125,21 @@ const handleSubmit = async (e) => {
     }
   }
 
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart());
+      const res = await fetch('/api/auth/signout');
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(signOutUserFailure(data.message));
+        return; 
+      }
+      dispatch(signOutUserSuccess());
+      navigate('/sign-in');
+    } catch (error) {
+      dispatch(signOutUserFailure(error.message));
+    }
+  }
 
   return (
     <div className='max-w-md mx-auto p-4'>
@@ -154,7 +172,7 @@ const handleSubmit = async (e) => {
     </form>
     <div className='flex justify-between mt-5'> 
       <span onClick={handleDeleteUser} className='text-red-500 cursor-pointer'>Eliminar cuenta</span>
-      <span className='text-blue-500 cursor-pointer'>Cerrar sesión</span>
+      <span onClick={handleSignOut} className='text-blue-500 cursor-pointer'>Cerrar sesión</span>
     </div>
     <p className='text-red-700 mt-5'>{error ? error : ''}</p>
     <p className='text-green-700 mt-5'>{updateSuccess ? '¡Usuario actualizado correctamente!' : ''}</p>
