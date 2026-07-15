@@ -1,8 +1,16 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useRef, useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 import { app } from '../firebase.js'
-import { updateUserStart, updateUserSuccess, updateUserFailure } from '../redux/user/userSlice.js'
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserFailure,
+} from '../redux/user/userSlice.js'
 
 
 export default function Profile() {
@@ -14,6 +22,7 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
 
   //firebase storage
@@ -95,6 +104,25 @@ const handleSubmit = async (e) => {
   }
 }
 
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess());
+      navigate('/sign-in');
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+  }
+
+
   return (
     <div className='max-w-md mx-auto p-4'>
     <h1 className='text-3xl font-semibold  text-center my-7'>Perfil del usuario</h1>
@@ -125,13 +153,13 @@ const handleSubmit = async (e) => {
       </button>
     </form>
     <div className='flex justify-between mt-5'> 
-      <span className='text-red-500 cursor-pointer'>Eliminar cuenta</span>
+      <span onClick={handleDeleteUser} className='text-red-500 cursor-pointer'>Eliminar cuenta</span>
       <span className='text-blue-500 cursor-pointer'>Cerrar sesión</span>
     </div>
     <p className='text-red-700 mt-5'>{error ? error : ''}</p>
     <p className='text-green-700 mt-5'>{updateSuccess ? '¡Usuario actualizado correctamente!' : ''}</p>
     </div>
   )
-}
+};
 
 
