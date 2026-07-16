@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
+import {Link} from 'react-router-dom'
 import { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
@@ -169,6 +170,9 @@ const handleSubmit = async (e) => {
       <button disabled={loading} type='submit' className='bg-slate-700 p-3 rounded-lg text-white cursor-pointer hover:bg-slate-800 disabled:opacity-70'>
         {loading ? 'Cargando...' : 'Actualizar'}
       </button>
+      <Link to='/create-listing' className='bg-blue-700 p-3 rounded-lg text-white cursor-pointer hover:bg-blue-800 disabled:opacity-70 text-center'>
+        Crear listado
+      </Link>
     </form>
     <div className='flex justify-between mt-5'> 
       <span onClick={handleDeleteUser} className='text-red-500 cursor-pointer'>Eliminar cuenta</span>
