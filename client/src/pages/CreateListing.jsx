@@ -10,7 +10,7 @@ import {
 import { app } from '../firebase.js';
 
 export default function CreateListing() {
-  
+
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
@@ -22,7 +22,7 @@ export default function CreateListing() {
     type: 'rent',
     bedrooms: 1,
     bathrooms: 1,
-    regularPrice: 50,
+    regularPrice: 1000000,
     discountPrice: 0,
     offer: false,
     parking: false,
@@ -148,7 +148,7 @@ export default function CreateListing() {
         setError(data.message);
         return;
       }
-      navigate(`/listing/${data._id}`);
+      navigate(`/listing/${data.listing._id}`);
     } catch (error) {
       setError(error.message);
       setLoading(false);
@@ -276,8 +276,9 @@ export default function CreateListing() {
               <input
                 type='number'
                 id='regularPrice'
-                min='50'
-                max='10000000'
+                min={formData.type === 'rent' ? 100000 : 15000000}
+                max={formData.type === 'rent' ? 30000000 : 10000000000}
+                step={formData.type === 'rent' ? 50000 : 1000000}
                 required
                 className='p-3 border border-gray-300 rounded-lg'
                 onChange={handleChange}
@@ -285,9 +286,9 @@ export default function CreateListing() {
               />
               <div className='flex flex-col items-center'>
                 <p>Precio Habitual</p>
-                {formData.type === 'rent' && (
-                  <span className='text-xs'>($ / mes)</span>
-                )}
+                <span className='text-xs'>
+                  {formData.type === 'rent' ? '(COP / mes)' : '(COP)'}
+                </span>
               </div>
             </div>
             {formData.offer && (
@@ -295,8 +296,9 @@ export default function CreateListing() {
                 <input
                   type='number'
                   id='discountPrice'
-                  min='0'
-                  max='10000000'
+                  min={formData.type === 'rent' ? 100000 : 15000000}
+                  max={formData.type === 'rent' ? 30000000 : 10000000000}
+                  step={formData.type === 'rent' ? 50000 : 1000000}
                   required
                   className='p-3 border border-gray-300 rounded-lg'
                   onChange={handleChange}
@@ -304,9 +306,9 @@ export default function CreateListing() {
                 />
                 <div className='flex flex-col items-center'>
                   <p>Precio con Descuento</p>
-                  {formData.type === 'rent' && (
-                    <span className='text-xs'>($ / mes)</span>
-                  )}
+                  <span className='text-xs'>
+                    {formData.type === 'rent' ? '(COP / mes)' : '(COP)'}
+                  </span>
                 </div>
               </div>
             )}
