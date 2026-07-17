@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   getDownloadURL,
   getStorage,
@@ -8,6 +10,9 @@ import {
 import { app } from '../firebase.js';
 
 export default function CreateListing() {
+  
+  const { currentUser } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
@@ -69,7 +74,7 @@ export default function CreateListing() {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload is ${progress}% done`);
+          console.log(`Subiendo ${progress}%`);
         },
         (error) => reject(error),
         () => {
@@ -87,11 +92,12 @@ export default function CreateListing() {
       imageUrls: formData.imageUrls.filter((_, i) => i !== index),
     });
   };
-
   const handleChange = (e) => {
     if (e.target.id === 'sale' || e.target.id === 'rent') {
-      setFormData({ ...formData, type: e.target.id });
-      return;
+      setFormData({
+        ...formData,
+        type: e.target.id,
+      });
     }
 
     if (
@@ -99,36 +105,57 @@ export default function CreateListing() {
       e.target.id === 'furnished' ||
       e.target.id === 'offer'
     ) {
-      setFormData({ ...formData, [e.target.id]: e.target.checked });
-      return;
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.checked,
+      });
     }
 
     if (
       e.target.type === 'number' ||
       e.target.type === 'text' ||
-      e.target.tagName === 'TEXTAREA'
+      e.target.type === 'textarea'
     ) {
-      setFormData({ ...formData, [e.target.id]: e.target.value });
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.value,
+      });
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (formData.imageUrls.length < 1) {
+      if (formData.imageUrls.length < 1)
         return setError('Debes subir al menos una imagen');
-      }
-      if (+formData.regularPrice < +formData.discountPrice) {
-        return setError('El precio con descuento debe ser menor al habitual');
-      }
+      if (+formData.regularPrice < +formData.discountPrice)
+        return setError('El precio con descuento debe ser menor al precio regular');
       setLoading(true);
       setError(false);
-    } catch (err) {
-      setError(err.message);
+      const res = await fetch('/api/listing/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          userRef: currentUser._id,
+        }),
+      });
+      const data = await res.json();
+      setLoading(false);
+      if (data.success === false) {
+        setError(data.message);
+        return;
+      }
+      navigate(`/listing/${data._id}`);
+    } catch (error) {
+      setError(error.message);
       setLoading(false);
     }
   };
 
+  
   return (
     <main className='p-3 max-w-4xl mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>
@@ -295,7 +322,10 @@ export default function CreateListing() {
           </p>
           <div className='flex gap-4'>
             <input
-              onChange={(e) => setFiles(e.target.files)}
+              onChange={(e) => {
+                setFiles(e.target.files);
+                console.log('Archivos seleccionados:', e.target.files);
+              }}
               className='p-3 border border-gray-300 rounded w-full'
               type='file'
               id='images'
