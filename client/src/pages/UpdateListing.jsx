@@ -224,7 +224,7 @@ export default function UpdateListing() {
                 onChange={handleChange}
                 checked={formData.type === 'rent'}
               />
-              <span>Alquiler</span>
+              <span>Arriendo</span>
             </div>
             <div className='flex gap-2'>
               <input
@@ -318,9 +318,9 @@ export default function UpdateListing() {
                 />
                 <div className='flex flex-col items-center'>
                   <p>Precio con Descuento</p>
-                  <span className='text-xs'>
-                    {formData.type === 'rent' ? '(COP / mes)' : '(COP)'}
-                  </span>
+                  {formData.type === 'rent' && (
+                    <span className='text-xs'>($ / mes)</span>
+                  )}
                 </div>
               </div>
             )}
