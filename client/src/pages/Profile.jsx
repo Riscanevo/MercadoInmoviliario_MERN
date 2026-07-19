@@ -15,6 +15,7 @@ import {
   signOutUserSuccess,
   signOutUserFailure,
 } from '../redux/user/userSlice.js'
+import { FaPencilAlt } from 'react-icons/fa'
 
 
 export default function Profile() {
@@ -188,7 +189,20 @@ const handleSubmit = async (e) => {
       ref={fileRef} 
       hidden accept='image/*'/>
 
-      <img onClick={() => fileRef.current.click()}  src={formData.avatar || currentUser.avatar} alt="Profile" className='w-24 h-24 object-cover  rounded-full cursor-pointer mx-auto block' />
+      <div
+        onClick={() => fileRef.current.click()}
+        className='relative w-24 h-24 mx-auto cursor-pointer group'
+        title='Cambiar foto de perfil'
+      >
+        <img
+          src={formData.avatar || currentUser.avatar}
+          alt="Profile"
+          className='w-24 h-24 object-cover rounded-full'
+        />
+        <span className='absolute bottom-0 right-0 flex items-center justify-center w-8 h-8 rounded-full bg-slate-700 text-white border-2 border-white shadow-sm group-hover:bg-slate-800 transition-colors'>
+          <FaPencilAlt className='text-xs' />
+        </span>
+      </div>
       <p className='text-sm self-center'>
         {fileUploadError ? (
           <span className='text-red-700'>Error al subir la imagen (imagen debe ser menor a 2MB)</span>
