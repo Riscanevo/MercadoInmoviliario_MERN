@@ -109,18 +109,22 @@ export default function Listing() {
               {listing.description}
             </p>
             <ul className='text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6'>
-              <li className='flex items-center gap-1 whitespace-nowrap '>
-                <FaBed className='text-lg' />
-                {listing.bedrooms > 1
-                  ? `${listing.bedrooms} dormitorios `
-                  : `${listing.bedrooms} dormitorio `}
-              </li>
-              <li className='flex items-center gap-1 whitespace-nowrap '>
-                <FaBath className='text-lg' />
-                {listing.bathrooms > 1
-                  ? `${listing.bathrooms} baños `
-                  : `${listing.bathrooms} baño `}
-              </li>
+              {listing.bedrooms != null && (
+                <li className='flex items-center gap-1 whitespace-nowrap '>
+                  <FaBed className='text-lg' />
+                  {listing.bedrooms > 1
+                    ? `${listing.bedrooms} dormitorios `
+                    : `${listing.bedrooms} dormitorio `}
+                </li>
+              )}
+              {listing.bathrooms != null && (
+                <li className='flex items-center gap-1 whitespace-nowrap '>
+                  <FaBath className='text-lg' />
+                  {listing.bathrooms > 1
+                    ? `${listing.bathrooms} baños `
+                    : `${listing.bathrooms} baño `}
+                </li>
+              )}
               <li className='flex items-center gap-1 whitespace-nowrap '>
                 <FaParking className='text-lg' />
                 {listing.parking ? 'Con parqueadero' : 'Sin parqueadero'}
