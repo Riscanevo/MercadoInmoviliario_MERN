@@ -70,18 +70,24 @@ export const updateListing = async (req, res, next) => {
   
       if (offer === undefined || offer === 'false') {
         offer = { $in: [false, true] };
+      } else {
+        offer = true;
       }
   
       let furnished = req.query.furnished;
   
       if (furnished === undefined || furnished === 'false') {
         furnished = { $in: [false, true] };
+      } else {
+        furnished = true;
       }
 
       let parking = req.query.parking;
 
       if (parking === undefined || parking === 'false') {
         parking = { $in: [false, true] };
+      } else {
+        parking = true;
       }
   
       let type = req.query.type;

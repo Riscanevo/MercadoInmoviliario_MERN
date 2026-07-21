@@ -65,6 +65,11 @@ export default function Header() {
                 Inicio
               </li>
             </Link>
+            <Link to='/about'>
+              <li className='hidden sm:inline text-slate-700 hover:underline'>
+                Acerca de
+              </li>
+            </Link>
             <Link to='/profile'>
             {currentUser ? (
               <img
