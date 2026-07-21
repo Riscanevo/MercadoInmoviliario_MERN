@@ -34,7 +34,7 @@ export default function Header() {
       <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
           <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
               <span className='text-slate-500'>Prisma</span>
-              <span className='text-slate-700'>Inmobiliario</span>
+              <span className='text-slate-700'>Inmobiliaria</span>
           </h1>
 
           <form
