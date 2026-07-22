@@ -51,7 +51,7 @@ export default function Header() {
               </button>
               <input 
                 type='text' 
-                placeholder='Buscar ubicación, ciudad o propiedad...'
+                placeholder='Buscar propiedad...'
                 className='w-full bg-transparent text-sm text-ink outline-none placeholder:text-[#9ca3af]'
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}

@@ -98,7 +98,7 @@ export default function UpdateListing() {
       const uploadTask = uploadBytesResumable(storageRef, file);
       uploadTask.on(
         'state_changed',
-        (_snapshot) => {},
+        () => {},
         (error) => {
           reject(error);
         },
