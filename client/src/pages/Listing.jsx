@@ -45,72 +45,80 @@ export default function Listing() {
   }, [params.listingId]);
 
   return (
-    <main>
-      {loading && <p className='text-center my-7 text-2xl'>Cargando...</p>}
+    <main className='page-shell'>
+      {loading && <p className='my-16 text-center font-display text-2xl text-ink-soft'>Cargando...</p>}
       {error && (
-        <p className='text-center my-7 text-2xl'>Ocurrió un error</p>
+        <p className='my-16 text-center font-display text-2xl text-danger'>Ocurrió un error</p>
       )}
       {listing && !loading && !error && (
         <div>
-          <Swiper modules={[Navigation]} navigation>
-            {listing.imageUrls.map((url) => (
-              <SwiperSlide key={url}>
-                <div
-                  className='h-[550px]'
-                  style={{
-                    background: `url(${url}) center no-repeat`,
-                    backgroundSize: 'cover',
-                  }}
-                ></div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <div className='fixed top-[13%] right-[3%] z-10 border rounded-full w-12 h-12 flex justify-center items-center bg-slate-100 cursor-pointer'>
-            <FaShare
-              className='text-slate-500'
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
-                setCopied(true);
-                setTimeout(() => {
-                  setCopied(false);
-                }, 2000);
-              }}
-            />
+          <div className='relative'>
+            <Swiper modules={[Navigation]} navigation>
+              {listing.imageUrls.map((url) => (
+                <SwiperSlide key={url}>
+                  <div
+                    className='h-[420px] sm:h-[550px]'
+                    style={{
+                      background: `url(${url}) center no-repeat`,
+                      backgroundSize: 'cover',
+                    }}
+                  ></div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <div className='pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-ink/30 to-transparent' />
           </div>
+          <button
+            type='button'
+            className='fixed top-[13%] right-[3%] z-10 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md border border-line bg-surface/95 text-ink-soft transition hover:border-accent hover:text-accent'
+            onClick={() => {
+              navigator.clipboard.writeText(window.location.href);
+              setCopied(true);
+              setTimeout(() => {
+                setCopied(false);
+              }, 2000);
+            }}
+            aria-label='Compartir'
+          >
+            <FaShare />
+          </button>
           {copied && (
-            <p className='fixed top-[23%] right-[5%] z-10 rounded-md bg-slate-100 p-2'>
+            <p className='fixed top-[23%] right-[5%] z-10 rounded-md border border-line bg-surface px-3 py-2 text-sm text-ink shadow-sm'>
               Link copiado!
             </p>
           )}
-          <div className='flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4'>
-            <p className='text-2xl font-semibold'>
-              {listing.name} - ${' '}
+          <div className='mx-auto my-10 flex max-w-4xl flex-col gap-5 px-4 sm:px-6'>
+            <p className='font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl'>
+              {listing.name}
+            </p>
+            <p className='font-display text-2xl font-semibold text-accent'>
+              ${' '}
               {listing.offer
                 ? listing.discountPrice.toLocaleString('es-ES')
                 : listing.regularPrice.toLocaleString('es-ES')}
-              {listing.type === 'rent' && ' / mes'}
+              {listing.type === 'rent' && <span className='text-base font-medium text-ink-muted'> / mes</span>}
             </p>
-            <p className='flex items-center mt-6 gap-2 text-slate-600  text-sm'>
-              <FaMapMarkerAlt className='text-green-700' />
+            <p className='flex items-center gap-2 text-sm text-ink-soft'>
+              <FaMapMarkerAlt className='text-accent' />
               {listing.address}
             </p>
-            <div className='flex gap-4'>
-              <p className='bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
+            <div className='flex flex-wrap gap-3'>
+              <p className='max-w-[200px] flex-1 bg-ink px-3 py-2 text-center text-sm font-semibold text-white'>
                 {listing.type === 'rent' ? 'Arriendo' : 'Venta'}
               </p>
               {listing.offer && (
-                <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
+                <p className='max-w-[240px] flex-1 bg-accent px-3 py-2 text-center text-sm font-semibold text-white'>
                   ${(+listing.regularPrice - +listing.discountPrice).toLocaleString('es-ES')} de descuento
                 </p>
               )}
             </div>
-            <p className='text-slate-800'>
-              <span className='font-semibold text-black'>Descripción - </span>
+            <p className='leading-relaxed text-ink-soft'>
+              <span className='font-semibold text-ink'>Descripción — </span>
               {listing.description}
             </p>
-            <ul className='text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6'>
+            <ul className='flex flex-wrap items-center gap-4 border-y border-line py-5 text-sm font-semibold text-accent sm:gap-6'>
               {listing.bedrooms != null && (
-                <li className='flex items-center gap-1 whitespace-nowrap '>
+                <li className='flex items-center gap-2 whitespace-nowrap '>
                   <FaBed className='text-lg' />
                   {listing.bedrooms > 1
                     ? `${listing.bedrooms} dormitorios `
@@ -136,7 +144,7 @@ export default function Listing() {
             </ul>
 
             {currentUser && listing.userRef !== currentUser._id && !contact && (
-              <button onClick={()=>setContact(true)} className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'>
+              <button onClick={()=>setContact(true)} className='btn-primary w-full sm:w-auto'>
                 Contactar al propietario
               </button>
             )}

@@ -40,24 +40,21 @@ export default function SignUp() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-[440px]">
+    <div className="page-shell flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-[440px] rounded-md border border-line bg-surface/90 p-6 sm:p-8">
         {/* Logo */}
-        <div className="flex items-center justify-center gap-2 mb-8">
-          <Building2 className="w-7 h-7 text-[#1e2a5a]" />
-          <span className="text-xl font-bold text-[#1e2a5a] tracking-tight">
-            PrismaInmobiliario
+        <div className="mb-8 flex items-center justify-center gap-2">
+          <Building2 className="h-7 w-7 text-accent" />
+          <span className="font-display text-xl font-semibold tracking-tight text-ink">
+            PrismaInmobiliaria
           </span>
         </div>
 
         {/* Título y subtítulo */}
-        <h1
-          className="text-center text-[#1e2a5a] text-4xl font-bold mb-3"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
+        <h1 className="font-display mb-3 text-center text-4xl font-semibold text-ink">
           Crea tu cuenta
         </h1>
-        <p className="text-center text-gray-500 mb-10 text-base leading-relaxed">
+        <p className="mb-10 text-center text-base leading-relaxed text-ink-muted">
           Regístrate gratis y empieza a explorar propiedades en segundos.
         </p>
 
@@ -65,65 +62,65 @@ export default function SignUp() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           {/* Usuario */}
           <div>
-            <label htmlFor="username" className="block text-sm text-gray-600 mb-1.5 font-medium">
+            <label htmlFor="username" className="mb-1.5 block text-sm font-medium text-ink-soft">
               Usuario
             </label>
             <div className="relative">
-              <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <User className="absolute top-1/2 left-3.5 h-5 w-5 -translate-y-1/2 text-ink-muted" />
               <input
                 type="text"
                 id="username"
                 placeholder="Tu nombre de usuario"
                 onChange={handleChange}
-                className="w-full h-[52px] pl-11 pr-4 bg-white border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 outline-none transition-all focus:border-[#1e2a5a] focus:ring-2 focus:ring-[#1e2a5a]/20"
+                className="input-field h-[52px] pl-11"
               />
             </div>
           </div>
 
           {/* Correo electrónico */}
           <div>
-            <label htmlFor="email" className="block text-sm text-gray-600 mb-1.5 font-medium">
+            <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-ink-soft">
               Correo electrónico
             </label>
             <div className="relative">
-              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Mail className="absolute top-1/2 left-3.5 h-5 w-5 -translate-y-1/2 text-ink-muted" />
               <input
                 type="email"
                 id="email"
                 placeholder="tucorreo@ejemplo.com"
                 onChange={handleChange}
-                className="w-full h-[52px] pl-11 pr-4 bg-white border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 outline-none transition-all focus:border-[#1e2a5a] focus:ring-2 focus:ring-[#1e2a5a]/20"
+                className="input-field h-[52px] pl-11"
               />
             </div>
           </div>
 
           {/* Contraseña */}
           <div>
-            <label htmlFor="password" className="block text-sm text-gray-600 mb-1.5 font-medium">
+            <label htmlFor="password" className="mb-1.5 block text-sm font-medium text-ink-soft">
               Contraseña
             </label>
             <div className="relative">
-              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Lock className="absolute top-1/2 left-3.5 h-5 w-5 -translate-y-1/2 text-ink-muted" />
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
                 placeholder="Crea una contraseña segura"
                 onChange={handleChange}
-                className="w-full h-[52px] pl-11 pr-12 bg-white border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 outline-none transition-all focus:border-[#1e2a5a] focus:ring-2 focus:ring-[#1e2a5a]/20"
+                className="input-field h-[52px] pr-12 pl-11"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                className="absolute top-1/2 right-3.5 -translate-y-1/2 text-ink-muted transition-colors hover:text-ink"
               >
-                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
               </button>
             </div>
           </div>
 
           {/* Error */}
           {error && (
-            <p className="text-red-500 text-sm text-center bg-red-50 border border-red-200 rounded-lg py-2.5 px-4">
+            <p className="rounded-md border border-danger/20 bg-danger/5 px-4 py-2.5 text-center text-sm text-danger">
               {error}
             </p>
           )}
@@ -132,18 +129,18 @@ export default function SignUp() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full h-[52px] bg-[#1e2a5a] text-white font-semibold rounded-lg hover:bg-[#162048] transition-colors disabled:opacity-60 disabled:cursor-not-allowed mt-1"
+            className="btn-primary mt-1 h-[52px] w-full"
           >
             {loading ? 'Creando cuenta...' : 'Crear cuenta'}
           </button>
         </form>
 
         {/* Pie */}
-        <p className="text-center text-gray-500 mt-7 text-sm">
+        <p className="mt-7 text-center text-sm text-ink-muted">
           ¿Ya tienes una cuenta?{' '}
           <Link
             to="/sign-in"
-            className="text-[#1e2a5a] font-semibold hover:underline"
+            className="font-semibold text-accent hover:text-accent-dark hover:underline"
           >
             Iniciar sesión
           </Link>

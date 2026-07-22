@@ -157,16 +157,17 @@ export default function CreateListing() {
 
   
   return (
-    <main className='p-3 max-w-4xl mx-auto'>
-      <h1 className='text-3xl font-semibold text-center my-7'>
+    <main className='page-shell mx-auto max-w-4xl px-4 py-10 sm:px-6'>
+      <p className='section-label mb-2 text-center'>Publicación</p>
+      <h1 className='font-display mb-8 text-center text-4xl font-semibold text-ink'>
         Crear un listado
       </h1>
-      <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-6 rounded-md border border-line bg-surface/90 p-5 sm:flex-row sm:gap-4 sm:p-6'>
         <div className='flex flex-col gap-4 flex-1'>
           <input
             type='text'
             placeholder='Nombre del listado'
-            className='border p-3 rounded-lg'
+            className='input-field'
             id='name'
             maxLength='62'
             minLength='10'
@@ -176,7 +177,7 @@ export default function CreateListing() {
           />
           <textarea
             placeholder='Descripcion del listado'
-            className='border p-3 rounded-lg'
+            className='input-field min-h-[120px]'
             id='description'
             required
             onChange={handleChange}
@@ -185,7 +186,7 @@ export default function CreateListing() {
           <input
             type='text'
             placeholder='Dirección'
-            className='border p-3 rounded-lg'
+            className='input-field'
             id='address'
             required
             onChange={handleChange}
@@ -197,7 +198,7 @@ export default function CreateListing() {
               <input
                 type='checkbox'
                 id='sale'
-                className='w-5'
+                className='h-4 w-4 accent-accent'
                 onChange={handleChange}
                 checked={formData.type === 'sale'}
               />
@@ -207,7 +208,7 @@ export default function CreateListing() {
               <input
                 type='checkbox'
                 id='rent'
-                className='w-5'
+                className='h-4 w-4 accent-accent'
                 onChange={handleChange}
                 checked={formData.type === 'rent'}
               />
@@ -217,7 +218,7 @@ export default function CreateListing() {
               <input
                 type='checkbox'
                 id='parking'
-                className='w-5'
+                className='h-4 w-4 accent-accent'
                 onChange={handleChange}
                 checked={formData.parking}
               />
@@ -227,7 +228,7 @@ export default function CreateListing() {
               <input
                 type='checkbox'
                 id='furnished'
-                className='w-5'
+                className='h-4 w-4 accent-accent'
                 onChange={handleChange}
                 checked={formData.furnished}
               />
@@ -237,7 +238,7 @@ export default function CreateListing() {
               <input
                 type='checkbox'
                 id='offer'
-                className='w-5'
+                className='h-4 w-4 accent-accent'
                 onChange={handleChange}
                 checked={formData.offer}
               />
@@ -253,7 +254,7 @@ export default function CreateListing() {
                 min='1'
                 max='10'
                 required
-                className='p-3 border border-gray-300 rounded-lg'
+                className='input-field w-28'
                 onChange={handleChange}
                 value={formData.bedrooms}
               />
@@ -266,7 +267,7 @@ export default function CreateListing() {
                 min='1'
                 max='10'
                 required
-                className='p-3 border border-gray-300 rounded-lg'
+                className='input-field w-28'
                 onChange={handleChange}
                 value={formData.bathrooms}
               />
@@ -280,7 +281,7 @@ export default function CreateListing() {
                 max={formData.type === 'rent' ? 30000000 : 10000000000}
                 step={formData.type === 'rent' ? 50000 : 1000000}
                 required
-                className='p-3 border border-gray-300 rounded-lg'
+                className='input-field w-28'
                 onChange={handleChange}
                 value={formData.regularPrice}
               />
@@ -300,7 +301,7 @@ export default function CreateListing() {
                   max={formData.type === 'rent' ? 30000000 : 10000000000}
                   step={formData.type === 'rent' ? 50000 : 1000000}
                   required
-                  className='p-3 border border-gray-300 rounded-lg'
+                  className='input-field w-28'
                   onChange={handleChange}
                   value={formData.discountPrice}
                 />
@@ -318,7 +319,7 @@ export default function CreateListing() {
         <div className='flex flex-col flex-1 gap-4'>
           <p className='font-semibold'>
             Imágenes:
-            <span className='font-normal text-gray-600 ml-2'>
+            <span className='ml-2 font-normal text-ink-muted'>
               La primera imagen sera la portada (max 6)
             </span>
           </p>
@@ -328,7 +329,7 @@ export default function CreateListing() {
                 setFiles(e.target.files);
                 console.log('Archivos seleccionados:', e.target.files);
               }}
-              className='p-3 border border-gray-300 rounded w-full'
+              className='input-field'
               type='file'
               id='images'
               accept='image/*'
@@ -338,29 +339,29 @@ export default function CreateListing() {
               type='button'
               disabled={uploading}
               onClick={handleImageSubmit}
-              className='p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80'
+              className='btn-secondary shrink-0'
             >
               {uploading ? 'Subiendo...' : 'Subir'}
             </button>
           </div>
-          <p className='text-red-700 text-sm'>
+          <p className='text-sm text-danger'>
             {imageUploadError && imageUploadError}
           </p>
           {formData.imageUrls.length > 0 &&
             formData.imageUrls.map((url, index) => (
               <div
                 key={url}
-                className='flex justify-between p-3 border items-center'
+                className='flex items-center justify-between border border-line p-3'
               >
                 <img
                   src={url}
                   alt='imagen del listado'
-                  className='w-20 h-20 object-contain rounded-lg'
+                  className='h-20 w-20 rounded-md object-cover'
                 />
                 <button
                   type='button'
                   onClick={() => handleRemoveImage(index)}
-                  className='p-3 text-red-700 rounded-lg uppercase hover:opacity-75'
+                  className='p-3 font-semibold uppercase text-danger hover:opacity-75'
                 >
                   Eliminar
                 </button>
@@ -368,11 +369,11 @@ export default function CreateListing() {
             ))}
           <button
             disabled={loading || uploading}
-            className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+            className='btn-primary'
           >
             {loading ? 'Creando...' : 'Crear listado'}
           </button>
-          {error && <p className='text-red-700 text-sm'>{error}</p>}
+          {error && <p className='text-sm text-danger'>{error}</p>}
         </div>
       </form>
     </main>

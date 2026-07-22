@@ -180,9 +180,10 @@ const handleSubmit = async (e) => {
   };
 
   return (
-    <div className='max-w-md mx-auto p-4'>
-    <h1 className='text-3xl font-semibold  text-center my-7'>Perfil del usuario</h1>
-    <form  onSubmit={handleSubmit} className='flex flex-col gap-4'>
+    <div className='page-shell mx-auto max-w-md px-4 py-10'>
+    <p className='section-label mb-2 text-center'>Cuenta</p>
+    <h1 className='font-display mb-8 text-center text-4xl font-semibold text-ink'>Perfil del usuario</h1>
+    <form  onSubmit={handleSubmit} className='flex flex-col gap-4 rounded-md border border-line bg-surface/90 p-5 sm:p-6'>
       <input 
       onChange={(e) => setFile(e.target.files[0])} 
       type="file" 
@@ -191,70 +192,70 @@ const handleSubmit = async (e) => {
 
       <div
         onClick={() => fileRef.current.click()}
-        className='relative w-24 h-24 mx-auto cursor-pointer group'
+        className='group relative mx-auto h-24 w-24 cursor-pointer'
         title='Cambiar foto de perfil'
       >
         <img
           src={formData.avatar || currentUser.avatar}
           alt="Profile"
-          className='w-24 h-24 object-cover rounded-full'
+          className='h-24 w-24 rounded-md object-cover ring-1 ring-line'
         />
-        <span className='absolute bottom-0 right-0 flex items-center justify-center w-8 h-8 rounded-full bg-slate-700 text-white border-2 border-white shadow-sm group-hover:bg-slate-800 transition-colors'>
+        <span className='absolute right-0 bottom-0 flex h-8 w-8 items-center justify-center rounded-md border border-surface bg-accent text-white transition-colors group-hover:bg-accent-dark'>
           <FaPencilAlt className='text-xs' />
         </span>
       </div>
-      <p className='text-sm self-center'>
+      <p className='self-center text-sm'>
         {fileUploadError ? (
-          <span className='text-red-700'>Error al subir la imagen (imagen debe ser menor a 2MB)</span>
+          <span className='text-danger'>Error al subir la imagen (imagen debe ser menor a 2MB)</span>
         ) : fileperc > 0 && fileperc < 100 ? (
-          <span className='text-slate-700'>{`Subiendo ${fileperc}%`}</span>
+          <span className='text-ink-soft'>{`Subiendo ${fileperc}%`}</span>
         ) : fileperc === 100 ? (
-          <span className='text-green-700'>Imagen subida correctamente!</span>
+          <span className='text-success'>Imagen subida correctamente!</span>
         ) : (
           ''
         )}
       </p>
-      <input type="text" placeholder='Nombre' defaultValue={currentUser.username} id="username" onChange={handleChange} className='border p-3 rounded-lg' />
-      <input type="text" placeholder='Email' defaultValue={currentUser.email} id="email" onChange={handleChange} className='w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500' />
-      <input type="password" placeholder='Contraseña' id="password" onChange={handleChange} className='w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500' />
-      <button disabled={loading} type='submit' className='bg-slate-700 p-3 rounded-lg text-white cursor-pointer hover:bg-slate-800 disabled:opacity-70'>
+      <input type="text" placeholder='Nombre' defaultValue={currentUser.username} id="username" onChange={handleChange} className='input-field' />
+      <input type="text" placeholder='Email' defaultValue={currentUser.email} id="email" onChange={handleChange} className='input-field' />
+      <input type="password" placeholder='Contraseña' id="password" onChange={handleChange} className='input-field' />
+      <button disabled={loading} type='submit' className='btn-primary cursor-pointer'>
         {loading ? 'Cargando...' : 'Actualizar'}
       </button>
-      <Link to='/create-listing' className='bg-blue-700 p-3 rounded-lg text-white cursor-pointer hover:bg-blue-800 disabled:opacity-70 text-center'>
+      <Link to='/create-listing' className='btn-secondary text-center'>
         Crear listado
       </Link>
     </form>
-    <div className='flex justify-between mt-5'> 
-      <span onClick={handleDeleteUser} className='text-red-500 cursor-pointer'>Eliminar cuenta</span>
-      <span onClick={handleSignOut} className='text-blue-500 cursor-pointer'>Cerrar sesión</span>
+    <div className='mt-5 flex justify-between text-sm'> 
+      <span onClick={handleDeleteUser} className='cursor-pointer font-medium text-danger hover:underline'>Eliminar cuenta</span>
+      <span onClick={handleSignOut} className='cursor-pointer font-medium text-accent hover:underline'>Cerrar sesión</span>
     </div>
-    <p className='text-red-700 mt-5'>{error ? error : ''}</p>
-    <p className='text-green-700 mt-5'>{updateSuccess ? '¡Usuario actualizado correctamente!' : ''}</p>
+    <p className='mt-5 text-danger'>{error ? error : ''}</p>
+    <p className='mt-5 text-success'>{updateSuccess ? '¡Usuario actualizado correctamente!' : ''}</p>
 
-    <button onClick={handleShowListings} className='text-blue-500 cursor-pointer w-full'> 
+    <button onClick={handleShowListings} className='btn-ghost mt-4 w-full cursor-pointer'> 
       Ver mis listados
     </button>
-    <p className='text-red-700 mt-5'>{showListingsError ? 'Error al cargar los listados' : ''}</p>
+    <p className='mt-5 text-danger'>{showListingsError ? 'Error al cargar los listados' : ''}</p>
 
     {userListings && userListings.length > 0 && (
-      <div className='flex flex-col gap-4'>
-        <h1 className='text-center mt-7 text-2xl font-semibold'>Tus listados</h1>
+      <div className='mt-6 flex flex-col gap-4'>
+        <h1 className='font-display text-center text-2xl font-semibold text-ink'>Tus listados</h1>
         {userListings.map((listing) => (
-          <div key={listing._id} className='border rounded-lg p-3 flex justify-between items-center gap-4'>
+          <div key={listing._id} className='flex items-center justify-between gap-4 rounded-md border border-line bg-surface p-3'>
             <Link to={`/listing/${listing._id}`}>
               <img
                 src={listing.imageUrls[0]}
                 alt='portada del listado'
-                className='h-16 w-16 object-contain'
+                className='h-16 w-16 rounded-md object-cover'
               />
             </Link>
-            <Link className='text-slate-700 font-semibold hover:underline truncate flex-1' to={`/listing/${listing._id}`}>
+            <Link className='flex-1 truncate font-semibold text-ink hover:text-accent' to={`/listing/${listing._id}`}>
               <p>{listing.name}</p>
             </Link>
-            <div className='flex flex-col items-center'>
-              <button onClick={() => handleListingDelete(listing._id)} className='text-red-700 uppercase'>Eliminar</button>
+            <div className='flex flex-col items-center gap-1 text-xs font-semibold uppercase tracking-wide'>
+              <button onClick={() => handleListingDelete(listing._id)} className='text-danger hover:underline'>Eliminar</button>
               <Link to={`/update-listing/${listing._id}`}>
-                <button className='text-green-700 uppercase'>Editar</button>
+                <button className='text-accent hover:underline'>Editar</button>
               </Link>
             </div>
           </div>

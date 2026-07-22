@@ -40,42 +40,51 @@ export default function SignIn() {
   };
 
   return (
-    <div className='p-3 max-w-lg mx-auto'>
-      <h1 className='text-3xl text-center font-semibold my-7'>Iniciar sesión</h1>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-        <input
-          type='email'
-          placeholder='Correo electrónico'
-          className='border p-3 rounded-lg'
-          id='email'
-          onChange={handleChange}
-        />
-        <input
-          type='password'
-          placeholder='Contraseña'
-          className='border p-3 rounded-lg'
-          id='password'
-          onChange={handleChange}
-        />
+    <div className='page-shell flex items-center justify-center px-4 py-14'>
+      <div className='w-full max-w-md rounded-md border border-line bg-surface/90 p-6 sm:p-8'>
+        <p className='section-label mb-3 text-center'>Bienvenido</p>
+        <h1 className='font-display mb-2 text-center text-4xl font-semibold text-ink'>Iniciar sesión</h1>
+        <p className='mb-8 text-center text-sm text-ink-muted'>Accede para gestionar tus propiedades y contactos.</p>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+          <input
+            type='email'
+            placeholder='Correo electrónico'
+            className='input-field'
+            id='email'
+            onChange={handleChange}
+          />
+          <input
+            type='password'
+            placeholder='Contraseña'
+            className='input-field'
+            id='password'
+            onChange={handleChange}
+          />
 
-        <button
-          disabled={loading}
-          className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
-        >
-          {loading ? 'Cargando...' : 'Iniciar sesión'}
-        </button>
+          <button
+            disabled={loading}
+            className='btn-primary w-full'
+          >
+            {loading ? 'Cargando...' : 'Iniciar sesión'}
+          </button>
 
-        <OAuth  />
+          <div className='relative my-1 text-center text-xs uppercase tracking-wider text-ink-muted'>
+            <span className='bg-surface relative z-10 px-3'>o</span>
+            <span className='absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-line' />
+          </div>
 
-        
-      </form>
-      <div className='flex gap-2 mt-5'>
-        <p>¿No tienes una cuenta?</p>
-        <Link to={'/sign-up'}>
-          <span className='text-blue-700'>Crear cuenta</span>
-        </Link>
+          <OAuth  />
+
+          
+        </form>
+        <div className='mt-6 flex justify-center gap-2 text-sm text-ink-soft'>
+          <p>¿No tienes una cuenta?</p>
+          <Link to={'/sign-up'}>
+            <span className='font-semibold text-accent hover:text-accent-dark'>Crear cuenta</span>
+          </Link>
+        </div>
+        {error && <p className='mt-5 rounded-md border border-danger/20 bg-danger/5 px-3 py-2 text-sm text-danger'>{error}</p>}
       </div>
-      {error && <p className='text-red-500 mt-5'>{error}</p>}
     </div>
   );
 }

@@ -30,56 +30,58 @@ export default function Header() {
   }, [location.search]);
 
   return (
-    <header className='bg-slate-200 shadow-md'>
-      <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
-          <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
-              <span className='text-slate-500'>Prisma</span>
-              <span className='text-slate-700'>Inmobiliaria</span>
-          </h1>
+    <header className='sticky top-0 z-50 border-b border-line/70 bg-surface/85 backdrop-blur-md'>
+      <div className='mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6'>
+          <Link to='/' className='group shrink-0'>
+            <h1 className='font-display text-xl font-semibold tracking-tight sm:text-2xl'>
+              <span className='text-accent transition group-hover:text-accent-dark'>Prisma</span>
+              <span className='text-ink'>Inmobiliaria</span>
+            </h1>
+          </Link>
 
           <form
           onSubmit={handleSubmit}
-          className='bg-slate-100 p-3 rounded-lg flex items-center'
+          className='flex min-w-0 flex-1 items-center gap-2 rounded-md border border-line bg-mist px-3 py-2 transition focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/15 sm:max-w-xs md:max-w-sm'
         >
 
               <input 
                 type='text' 
                 placeholder='Buscar propiedades...'
-                className='bg-transparent'
+                className='w-full bg-transparent text-sm text-ink outline-none placeholder:text-ink-muted'
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
 
 
                   
-              <button>
-                <FaSearch className='text-slate-600' />
+              <button type='submit' aria-label='Buscar' className='text-ink-muted transition hover:text-accent'>
+                <FaSearch className='text-sm' />
               </button>
 
 
 
           </form>
-            <ul className='flex gap-4 items-center'>
+            <ul className='flex items-center gap-1 sm:gap-5'>
               <Link to='/'>
-              <li className='hidden sm:inline text-slate-700 hover:underline'>
+              <li className='hidden text-sm font-medium text-ink-soft transition hover:text-accent sm:inline'>
                 Inicio
               </li>
             </Link>
             <Link to='/about'>
-              <li className='hidden sm:inline text-slate-700 hover:underline'>
+              <li className='hidden text-sm font-medium text-ink-soft transition hover:text-accent sm:inline'>
                 Acerca de
               </li>
             </Link>
-            <Link to='/profile'>
+            <Link to='/profile' className='flex items-center'>
             {currentUser ? (
               <img
-                className='rounded-full h-7 w-7 object-cover'
+                className='h-8 w-8 rounded-md object-cover ring-1 ring-line transition hover:ring-accent'
                 src={currentUser.avatar || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}
                 alt='profile'
                 referrerPolicy='no-referrer'
               />
             ) : (
-              <li className=' text-slate-700 hover:underline'>
+              <li className='rounded-md bg-ink px-3 py-2 text-sm font-semibold text-white transition hover:bg-accent sm:px-4'>
                 Iniciar sesión
               </li>
             )}

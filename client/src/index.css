@@ -1,2 +1,112 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Figtree:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #0f1419;
+  --color-ink-soft: #3a424c;
+  --color-ink-muted: #6b7380;
+  --color-mist: #f2f5f7;
+  --color-mist-deep: #e4e9ee;
+  --color-line: #d2d9e0;
+  --color-surface: #ffffff;
+  --color-accent: #0d7377;
+  --color-accent-dark: #095558;
+  --color-accent-soft: #e6f3f3;
+  --color-danger: #b42318;
+  --color-success: #067647;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply m-0 min-h-screen bg-mist font-sans text-ink antialiased;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 10% -10%, rgba(13, 115, 119, 0.08), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 100% 0%, rgba(15, 20, 25, 0.04), transparent 50%),
+      linear-gradient(180deg, #f7f9fa 0%, #eef2f5 100%);
+    background-attachment: fixed;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 28%, white);
+    color: var(--color-ink);
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .page-shell {
+    @apply min-h-[calc(100vh-4.5rem)];
+  }
+
+  .input-field {
+    @apply w-full border border-line bg-surface px-4 py-3 text-ink placeholder:text-ink-muted outline-none transition
+      focus:border-accent focus:ring-2 focus:ring-accent/20 rounded-md;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-accent px-5 py-3 font-semibold tracking-wide text-white
+      transition hover:bg-accent-dark disabled:cursor-not-allowed disabled:opacity-60 rounded-md;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 border border-ink/15 bg-surface px-5 py-3 font-semibold text-ink
+      transition hover:border-accent hover:text-accent rounded-md;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center font-medium text-accent transition hover:text-accent-dark;
+  }
+
+  .section-label {
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-accent;
+  }
+
+  .section-title {
+    @apply font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl;
+  }
+
+  .fade-up {
+    animation: fadeUp 0.7s ease-out both;
+  }
+
+  .fade-up-delay {
+    animation: fadeUp 0.8s ease-out 0.12s both;
+  }
+
+  .fade-up-delay-2 {
+    animation: fadeUp 0.85s ease-out 0.22s both;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .fade-up-delay,
+  .fade-up-delay-2 {
+    animation: none;
+  }
+}

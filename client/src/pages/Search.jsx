@@ -128,93 +128,99 @@ export default function Search() {
   };
 
   return (
-    <div className='flex flex-col md:flex-row'>
-      <div className='p-7  border-b-2 md:border-r-2 md:min-h-screen'>
-        <form onSubmit={handleSubmit} className='flex flex-col gap-8'>
-          <div className='flex items-center gap-2'>
-            <label className='whitespace-nowrap font-semibold'>Nombre de la propiedad:</label>
+    <div className='page-shell flex flex-col md:flex-row'>
+      <aside className='border-b border-line bg-surface/70 p-6 md:min-h-[calc(100vh-4.5rem)] md:w-[320px] md:shrink-0 md:border-b-0 md:border-r'>
+        <p className='section-label mb-3'>Filtros</p>
+        <h2 className='font-display mb-6 text-2xl font-semibold text-ink'>Buscar propiedades</h2>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-7'>
+          <div className='flex flex-col gap-2'>
+            <label className='text-sm font-semibold text-ink-soft'>Nombre de la propiedad</label>
             <input
               type='text'
               id='searchTerm'
               placeholder='Buscar...'
-              className='border rounded-lg p-3 w-full'
+              className='input-field'
               value={sidebardata.searchTerm}
               onChange={handleChange}
             />
           </div>
-          <div className='flex gap-2 flex-wrap items-center'>
-            <label className='font-semibold'>Tipo:</label>
-            <div className='flex gap-2'>
+          <div className='flex flex-col gap-3'>
+            <label className='text-sm font-semibold text-ink-soft'>Tipo</label>
+            <div className='flex flex-wrap gap-3 text-sm text-ink'>
+            <div className='flex items-center gap-2'>
               <input
                 type='checkbox'
                 id='all'
-                className='w-5'
+                className='h-4 w-4 accent-accent'
                 onChange={handleChange}
                 checked={sidebardata.type === 'all'}
               />
               <span>Alquiler & Venta</span>
             </div>
-            <div className='flex gap-2'>
+            <div className='flex items-center gap-2'>
               <input
                 type='checkbox'
                 id='rent'
-                className='w-5'
+                className='h-4 w-4 accent-accent'
                 onChange={handleChange}
                 checked={sidebardata.type === 'rent'}
               />
               <span>Alquiler</span>
             </div>
-            <div className='flex gap-2'>
+            <div className='flex items-center gap-2'>
               <input
                 type='checkbox'
                 id='sale'
-                className='w-5'
+                className='h-4 w-4 accent-accent'
                 onChange={handleChange}
                 checked={sidebardata.type === 'sale'}
               />
               <span>Venta</span>
             </div>
-            <div className='flex gap-2'>
+            <div className='flex items-center gap-2'>
               <input
                 type='checkbox'
                 id='offer'
-                className='w-5'
+                className='h-4 w-4 accent-accent'
                 onChange={handleChange}
                 checked={sidebardata.offer}
               />
               <span>Oferta</span>
             </div>
+            </div>
           </div>
-          <div className='flex gap-2 flex-wrap items-center'>
-            <label className='font-semibold'>Servicios:</label>
-            <div className='flex gap-2'>
+          <div className='flex flex-col gap-3'>
+            <label className='text-sm font-semibold text-ink-soft'>Servicios</label>
+            <div className='flex flex-wrap gap-3 text-sm text-ink'>
+            <div className='flex items-center gap-2'>
               <input
                 type='checkbox'
                 id='parking'
-                className='w-5'
+                className='h-4 w-4 accent-accent'
                 onChange={handleChange}
                 checked={sidebardata.parking}
               />
               <span>Parqueadero</span>
             </div>
-            <div className='flex gap-2'>
+            <div className='flex items-center gap-2'>
               <input
                 type='checkbox'
                 id='furnished'
-                className='w-5'
+                className='h-4 w-4 accent-accent'
                 onChange={handleChange}
                 checked={sidebardata.furnished}
               />
               <span>Muebles</span>
             </div>
+            </div>
           </div>
-          <div className='flex items-center gap-2'>
-            <label className='font-semibold'>Ordenar:</label>
+          <div className='flex flex-col gap-2'>
+            <label className='text-sm font-semibold text-ink-soft'>Ordenar</label>
             <select
               onChange={handleChange}
               value={`${sidebardata.sort}_${sidebardata.order}`}
               id='sort_order'
-              className='border rounded-lg p-3'
+              className='input-field'
             >
               <option value='regularPrice_desc'>Precio alto a bajo</option>
               <option value='regularPrice_asc'>Precio bajo a alto</option>
@@ -222,22 +228,25 @@ export default function Search() {
               <option value='createdAt_asc'>Más antiguo</option>
             </select>
           </div>
-          <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95'>
+          <button className='btn-primary w-full'>
             Buscar
           </button>
         </form>
-      </div>
+      </aside>
       <div className='flex-1'>
-        <h1 className='text-3xl font-semibold border-b p-3 text-slate-700 mt-5'>
-          Resultados de la búsqueda:
-        </h1>
-        <div className='p-7 flex flex-wrap gap-4'>
+        <div className='border-b border-line px-4 py-6 sm:px-7'>
+          <p className='section-label mb-2'>Resultados</p>
+          <h1 className='font-display text-3xl font-semibold text-ink'>
+            Resultados de la búsqueda
+          </h1>
+        </div>
+        <div className='grid grid-cols-1 gap-6 p-4 sm:grid-cols-2 sm:p-7 xl:grid-cols-3'>
         {!loading && listings.length === 0 && (
-            <p className='text-xl text-slate-700'>No listing found!</p>
+            <p className='col-span-full text-lg text-ink-soft'>No se encontraron propiedades.</p>
           )}
           {loading && (
-            <p className='text-xl text-slate-700 text-center w-full'>
-              Loading...
+            <p className='col-span-full w-full text-center text-lg text-ink-soft'>
+              Cargando...
             </p>
           )}
 
@@ -246,15 +255,17 @@ export default function Search() {
             listings.map((listing) => (
               <ListingItem key={listing._id} listing={listing} />
             ))}
-                      {showMore && (
+        </div>
+        {showMore && (
+          <div className='px-4 pb-10 sm:px-7'>
             <button
               onClick={onShowMoreClick}
-              className='text-green-700 hover:underline p-7 text-center w-full'
+              className='btn-secondary w-full'
             >
               Ver más
             </button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
