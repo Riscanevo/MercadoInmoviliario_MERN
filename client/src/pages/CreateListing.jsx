@@ -71,11 +71,7 @@ export default function CreateListing() {
 
       uploadTask.on(
         'state_changed',
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Subiendo ${progress}%`);
-        },
+        (_snapshot) => {},
         (error) => reject(error),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
@@ -327,7 +323,6 @@ export default function CreateListing() {
             <input
               onChange={(e) => {
                 setFiles(e.target.files);
-                console.log('Archivos seleccionados:', e.target.files);
               }}
               className='input-field'
               type='file'

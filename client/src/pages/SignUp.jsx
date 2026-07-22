@@ -45,8 +45,9 @@ export default function SignUp() {
         {/* Logo */}
         <div className="mb-8 flex items-center justify-center gap-2">
           <Building2 className="h-7 w-7 text-accent" />
-          <span className="font-display text-xl font-semibold tracking-tight text-ink">
-            PrismaInmobiliaria
+          <span className="font-display text-xl font-semibold tracking-tight">
+            <span className="text-ink">Prisma</span>
+            <span className="text-accent">Inmobiliaria</span>
           </span>
         </div>
 

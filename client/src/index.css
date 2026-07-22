@@ -12,8 +12,8 @@
   --color-mist-deep: #e4e9ee;
   --color-line: #d2d9e0;
   --color-surface: #ffffff;
-  --color-accent: #0d7377;
-  --color-accent-dark: #095558;
+  --color-accent: #0b6b6e;
+  --color-accent-dark: #085255;
   --color-accent-soft: #e6f3f3;
   --color-danger: #b42318;
   --color-success: #067647;
@@ -90,6 +90,60 @@
   .fade-up-delay-2 {
     animation: fadeUp 0.85s ease-out 0.22s both;
   }
+}
+
+/* Listing detail gallery — mockup style */
+.listing-gallery .swiper-button-prev,
+.listing-gallery .swiper-button-next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-top: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #fff;
+  border-radius: 9999px;
+  box-shadow: 0 4px 14px rgba(15, 20, 25, 0.12);
+  color: var(--color-accent);
+}
+
+.listing-gallery .swiper-button-prev {
+  left: 1rem;
+}
+
+.listing-gallery .swiper-button-next {
+  right: 1rem;
+}
+
+.listing-gallery .swiper-button-prev::after,
+.listing-gallery .swiper-button-next::after {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.listing-gallery .swiper-button-prev svg,
+.listing-gallery .swiper-button-next svg,
+.listing-gallery .swiper-navigation-icon {
+  width: 11px !important;
+  height: 20px !important;
+  max-width: 11px;
+  max-height: 20px;
+  object-fit: contain;
+}
+
+.listing-gallery .swiper-pagination-bullet {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #fff;
+  opacity: 0.55;
+}
+
+.listing-gallery .swiper-pagination-bullet-active {
+  opacity: 1;
+  background: #fff;
+  transform: scale(1.15);
 }
 
 @keyframes fadeUp {

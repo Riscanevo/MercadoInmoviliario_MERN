@@ -42,7 +42,21 @@ export default function UpdateListing() {
         console.log(data.message);
         return;
       }
-      setFormData(data);
+      // Normaliza campos para evitar inputs controlled/uncontrolled (address faltante en listings viejos)
+      setFormData({
+        imageUrls: data.imageUrls || [],
+        name: data.name || '',
+        description: data.description || '',
+        address: data.address || '',
+        type: data.type || 'rent',
+        bedrooms: data.bedrooms ?? 1,
+        bathrooms: data.bathrooms ?? 1,
+        regularPrice: data.regularPrice ?? 1000000,
+        discountPrice: data.discountPrice ?? 0,
+        offer: Boolean(data.offer),
+        parking: Boolean(data.parking),
+        furnished: Boolean(data.furnished),
+      });
     };
 
     fetchListing();
@@ -84,11 +98,7 @@ export default function UpdateListing() {
       const uploadTask = uploadBytesResumable(storageRef, file);
       uploadTask.on(
         'state_changed',
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Subiendo ${progress}%`);
-        },
+        (_snapshot) => {},
         (error) => {
           reject(error);
         },
@@ -187,7 +197,7 @@ export default function UpdateListing() {
             minLength='10'
             required
             onChange={handleChange}
-            value={formData.name}
+            value={formData.name ?? ''}
           />
           <textarea
             placeholder='Descripcion del listado'
@@ -195,7 +205,7 @@ export default function UpdateListing() {
             id='description'
             required
             onChange={handleChange}
-            value={formData.description}
+            value={formData.description ?? ''}
           />
           <input
             type='text'
@@ -204,7 +214,7 @@ export default function UpdateListing() {
             id='address'
             required
             onChange={handleChange}
-            value={formData.address}
+            value={formData.address ?? ''}
           />
           <div className='flex gap-6 flex-wrap'>
             <div className='flex gap-2'>

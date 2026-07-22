@@ -1,18 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay, EffectFade } from 'swiper/modules';
-import SwiperCore from 'swiper';
-import 'swiper/css/bundle';
 import ListingItem from '../components/ListingItem';
 
+const HERO_IMAGE =
+  'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=2400&q=80';
 
 export default function Home() {
 
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
-  SwiperCore.use([Navigation]);
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
@@ -47,50 +44,30 @@ export default function Home() {
     fetchOfferListings();
   }, []);
 
-  const heroSlides =
-    offerListings && offerListings.length > 0
-      ? offerListings
-      : [{ _id: 'fallback', imageUrls: ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1920&q=80'] }];
-
   return (
     <div className='page-shell'>
-    {/* Hero full-bleed */}
-    <section className='relative min-h-[88vh] w-full overflow-hidden'>
-      <Swiper
-        modules={[Navigation, Autoplay, EffectFade]}
-        navigation
-        effect='fade'
-        autoplay={{ delay: 5200, disableOnInteraction: false }}
-        loop={heroSlides.length > 1}
-        className='absolute inset-0 h-full w-full'
-      >
-        {heroSlides.map((listing) => (
-          <SwiperSlide key={listing._id}>
-            <div
-              style={{
-                background: `url(${listing.imageUrls[0]}) center / cover no-repeat`,
-              }}
-              className='h-[88vh] w-full scale-105'
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+    {/* Hero — composición como mockup de referencia */}
+    <section className='relative flex min-h-[calc(100vh-4.25rem)] w-full items-end overflow-hidden sm:items-center'>
+      <div
+        className='absolute inset-0 scale-105 bg-cover bg-center'
+        style={{ backgroundImage: `url(${HERO_IMAGE})` }}
+        aria-hidden='true'
+      />
+      {/* Soft left readability overlay (matches photo, not heavy) */}
+      <div className='pointer-events-none absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent' />
+      <div className='pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10' />
 
-      <div className='pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/55 to-ink/25' />
-      <div className='pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-ink/20' />
-
-      <div className='relative z-10 mx-auto flex min-h-[88vh] max-w-6xl flex-col justify-end px-4 pb-16 pt-28 sm:px-6 sm:pb-20 lg:justify-center lg:pb-0'>
-        <p className='section-label fade-up mb-4 text-white/90'>PrismaInmobiliaria</p>
-        <h1 className='fade-up-delay font-display max-w-3xl text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-7xl'>
+      <div className='relative z-10 mx-auto w-full max-w-7xl px-5 pb-16 pt-24 sm:px-8 sm:pb-20 lg:px-10 lg:pb-24'>
+        <h1 className='fade-up font-display max-w-2xl text-[2.35rem] font-semibold leading-[1.12] tracking-tight text-white sm:text-5xl lg:text-[3.75rem] lg:leading-[1.08]'>
           Encuentra tu próximo lugar perfecto
         </h1>
-        <p className='fade-up-delay-2 mt-5 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base'>
-          Propiedades seleccionadas para comprar o alquilar, con una experiencia clara y moderna.
+        <p className='fade-up-delay mt-5 max-w-md text-[0.95rem] leading-relaxed text-white/90 sm:text-base lg:text-lg'>
+          Propiedades seleccionadas cuidadosamente para ayudarte a vivir mejor.
         </p>
-        <div className='fade-up-delay-2 mt-8'>
+        <div className='fade-up-delay-2 mt-8 sm:mt-10'>
           <Link
             to={'/search'}
-            className='btn-primary pointer-events-auto bg-white text-ink hover:bg-mist'
+            className='inline-flex items-center justify-center rounded-lg bg-white px-7 py-3.5 text-sm font-semibold text-[#1a1f26] shadow-sm transition hover:bg-white/90 sm:px-8 sm:text-base'
           >
             Explorar propiedades
           </Link>
@@ -100,7 +77,7 @@ export default function Home() {
 
     {/* listing results for offer, sale and rent */}
 
-    <div className='mx-auto max-w-6xl px-4 py-16 sm:px-6'>
+    <div className='mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8'>
       {offerListings && offerListings.length > 0 && (
         <section className='mb-16'>
           <div className='mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between'>
